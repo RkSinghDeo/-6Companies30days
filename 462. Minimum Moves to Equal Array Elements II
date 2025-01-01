@@ -1,0 +1,8 @@
+class Solution:
+    def minMoves2(self, nums: List[int]) -> int:
+        nums.sort()
+        median = nums[len(nums) // 2]  
+        sol = 0
+        for x in nums:
+            sol += abs(x-median)
+        return sol
