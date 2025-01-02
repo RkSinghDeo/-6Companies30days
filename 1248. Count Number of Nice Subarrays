@@ -1,0 +1,21 @@
+class Solution:
+    def numberOfSubarrays(self, nums: List[int], k: int) -> int:
+        oddCount = 0
+        start = 0
+        solution = 0
+        count = 0
+
+        for end in range(len(nums)):
+            if nums[end] % 2 != 0:
+                oddCount += 1
+                count = 0
+    
+            while oddCount == k:
+                if nums[start] % 2 != 0:
+                    oddCount -= 1
+                start += 1
+                count += 1
+
+            solution += count
+
+        return solution
