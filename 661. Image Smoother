@@ -5,13 +5,36 @@ class Solution:
 
         for r in range(Rows):
             for c in range(Cols):
-                total, count = 0, 0
-                for i in range(r - 1, r + 2):
-                    for j in range(c - 1, c + 2):
-                        if i < 0 or i == Rows or j < 0 or j == Cols:
-                            continue
-                        total += img[i][j]
-                        count += 1
+                total, count = img[r][c], 1  # Start with the current cell
+
+                # Manually check each of the 8 neighbors
+                if r > 0:  # Up
+                    total += img[r - 1][c]
+                    count += 1
+                if r < Rows - 1:  # Down
+                    total += img[r + 1][c]
+                    count += 1
+                if c > 0:  # Left
+                    total += img[r][c - 1]
+                    count += 1
+                if c < Cols - 1:  # Right
+                    total += img[r][c + 1]
+                    count += 1
+                if r > 0 and c > 0:  # Top-left
+                    total += img[r - 1][c - 1]
+                    count += 1
+                if r > 0 and c < Cols - 1:  # Top-right
+                    total += img[r - 1][c + 1]
+                    count += 1
+                if r < Rows - 1 and c > 0:  # Bottom-left
+                    total += img[r + 1][c - 1]
+                    count += 1
+                if r < Rows - 1 and c < Cols - 1:  # Bottom-right
+                    total += img[r + 1][c + 1]
+                    count += 1
+
+                # Calculate the smoothed value
                 res[r][c] = total // count
 
         return res
+
