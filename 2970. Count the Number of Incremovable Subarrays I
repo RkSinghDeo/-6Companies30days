@@ -1,0 +1,28 @@
+class Solution:
+    def incremovableSubarrayCount(self, nums: List[int]) -> int:
+        n = len(nums)
+        l, r = 0, n - 1
+
+        while l + 1 < n and nums[l] < nums[l + 1]:
+            l += 1
+
+        if l == r:  # the entire array is strictly increasing
+            return (n * (n + 1)) // 2
+
+        res =  (l + 2) * (n + 1)  # shortcut of the below comments
+
+        while l >= 0:
+            if nums[l] < nums[r]:  # guaranteed that l < r < n
+                if nums[r - 1] >= nums[r]:
+                    res -= r * (l + 1)  # - (l + 1) * (n + 1)
+                    break
+                r -= 1
+            else:
+                res -= r + 1  # - (n + 1)
+                l -= 1
+
+        while r - 1 >= 0 and nums[r - 1] < nums[r]:
+            r -= 1
+        res -= r  # - (n + 1)
+
+        return res
