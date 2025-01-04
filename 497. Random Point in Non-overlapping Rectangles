@@ -1,0 +1,36 @@
+class Solution:
+
+    def __init__(self, rects: list):
+        self.rects = rects
+        self.prefix_sum = []
+        total_points = 0
+        
+        for rect in rects:
+            ai, bi, xi, yi = rect
+            num_points = (xi - ai + 1) * (yi - bi + 1)
+            total_points += num_points
+            self.prefix_sum.append(total_points)
+
+    def pick(self) -> list:
+        total_points = self.prefix_sum[-1]
+        rand_point = random.randint(1, total_points)
+        
+        left, right = 0, len(self.prefix_sum) - 1
+        while left < right:
+            mid = (left + right) // 2
+            if self.prefix_sum[mid] < rand_point:
+                left = mid + 1
+            else:
+                right = mid
+        
+        selected_rect = self.rects[left]
+        ai, bi, xi, yi = selected_rect
+        prev_sum = self.prefix_sum[left - 1] if left > 0 else 0
+        offset = rand_point - prev_sum - 1
+        
+        rect_width = xi - ai + 1
+        rect_height = yi - bi + 1
+        x = ai + (offset % rect_width)
+        y = bi + (offset // rect_width)
+        
+        return [x, y]
