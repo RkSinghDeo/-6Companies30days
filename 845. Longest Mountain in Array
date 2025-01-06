@@ -1,0 +1,27 @@
+class Solution:
+    def longestMountain(self, arr: List[int]) -> int:
+
+        if len(arr) < 3 :
+            return 0
+        index = 1
+        sol = 0
+        while index < len(arr) :
+            flag1 , flag2 = False , False
+            temp1 , temp2 = 0, 0
+            while index < len(arr) and arr[index-1] - arr[index] == 0:
+                index+=1 
+
+            while index < len(arr) and arr[index-1] - arr[index]  < 0  :
+                temp1 += 1
+                index += 1
+                flag1 = True
+            while index < len(arr) and arr[index-1] - arr[index]  > 0 :
+                temp2 += 1
+                index += 1
+                flag2 = True
+            
+            if flag1 == True and flag2 == True:
+                sol = max(sol, temp1 + temp2 + 1)
+            
+
+        return sol 
